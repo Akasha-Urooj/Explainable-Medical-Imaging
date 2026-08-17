@@ -10,3 +10,4 @@ Pillow
 opencv-python
 grad-cam
 streamlit
+opencv-python
