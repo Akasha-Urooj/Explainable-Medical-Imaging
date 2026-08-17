@@ -14,9 +14,257 @@ from pathlib import Path
 
 st.set_page_config(
     page_title="Explainable Medical Imaging",
-    page_icon="🔬",
-    layout="wide"
+    page_icon="🩻",
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
+
+
+# =========================================================
+# PROFESSIONAL UI CSS
+# =========================================================
+
+st.html("""
+<style>
+
+html, body, [class*="css"] {
+    font-family: Inter, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+}
+
+.stApp {
+    background: #f5f7fb;
+}
+
+.block-container {
+    max-width: 1400px;
+    padding-top: 1.5rem;
+    padding-bottom: 2rem;
+}
+
+
+/* ================= SIDEBAR ================= */
+
+[data-testid="stSidebar"] {
+    background: #0b1220;
+}
+
+[data-testid="stSidebar"] * {
+    color: #e5edf8;
+}
+
+.sidebar-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 4px;
+}
+
+.sidebar-subtitle {
+    color: #91a1b7;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.sidebar-line {
+    height: 1px;
+    background: #26344a;
+    margin: 22px 0;
+}
+
+.sidebar-card {
+    background: #121d30;
+    border: 1px solid #26364e;
+    border-radius: 12px;
+    padding: 13px;
+    margin: 9px 0;
+}
+
+.sidebar-card-title {
+    font-size: 11px;
+    color: #8ea0b8;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.sidebar-card-value {
+    font-size: 14px;
+    color: #ffffff;
+    font-weight: 700;
+    margin-top: 3px;
+}
+
+
+/* ================= HERO ================= */
+
+.hero {
+    background: linear-gradient(
+        135deg,
+        #0b1220 0%,
+        #12294d 55%,
+        #087f73 100%
+    );
+    border-radius: 24px;
+    padding: 38px 42px;
+    margin-bottom: 24px;
+    box-shadow: 0 15px 40px rgba(15, 23, 42, 0.18);
+}
+
+.hero-title {
+    color: #ffffff;
+    font-size: 40px;
+    font-weight: 850;
+    letter-spacing: -1px;
+}
+
+.hero-text {
+    color: #d8e3f1;
+    font-size: 15px;
+    line-height: 1.7;
+    max-width: 900px;
+    margin-top: 9px;
+}
+
+.badges {
+    margin-top: 19px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 7px 13px;
+    margin-right: 7px;
+    border-radius: 50px;
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.20);
+    color: #ffffff;
+    font-size: 12px;
+}
+
+
+/* ================= STATUS ================= */
+
+.status {
+    background: #ffffff;
+    border: 1px solid #dce3ec;
+    border-radius: 14px;
+    padding: 13px 17px;
+    margin-bottom: 22px;
+    box-shadow: 0 4px 14px rgba(15,23,42,0.04);
+}
+
+.status-online {
+    color: #039855;
+    font-weight: 800;
+    font-size: 13px;
+}
+
+.status-detail {
+    color: #667085;
+    font-size: 13px;
+}
+
+
+/* ================= SECTION ================= */
+
+.section-title {
+    color: #101828;
+    font-size: 23px;
+    font-weight: 800;
+    margin-top: 22px;
+    margin-bottom: 3px;
+}
+
+.section-text {
+    color: #667085;
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+
+/* ================= RESULT ================= */
+
+.prediction-normal {
+    background: #ecfdf3;
+    border: 1px solid #abefc6;
+    border-radius: 15px;
+    padding: 18px;
+    color: #027a48;
+    font-size: 27px;
+    font-weight: 800;
+    text-align: center;
+}
+
+.prediction-pneumonia {
+    background: #fff1f3;
+    border: 1px solid #fecdd3;
+    border-radius: 15px;
+    padding: 18px;
+    color: #c01048;
+    font-size: 27px;
+    font-weight: 800;
+    text-align: center;
+}
+
+
+/* ================= CARD ================= */
+
+.card {
+    background: #ffffff;
+    border: 1px solid #dce3ec;
+    border-radius: 20px;
+    padding: 21px;
+    box-shadow: 0 7px 22px rgba(15,23,42,0.05);
+}
+
+.card-label {
+    color: #667085;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+
+/* ================= EXPLANATION ================= */
+
+.explain {
+    background: #edfafa;
+    border: 1px solid #b9e6df;
+    border-left: 5px solid #087f73;
+    border-radius: 14px;
+    padding: 17px 19px;
+    color: #175e59;
+    line-height: 1.65;
+    font-size: 14px;
+}
+
+
+/* ================= DISCLAIMER ================= */
+
+.disclaimer {
+    background: #fffaeb;
+    border: 1px solid #fedf89;
+    border-radius: 14px;
+    padding: 15px 18px;
+    color: #7a2e0e;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-top: 20px;
+}
+
+
+/* ================= FOOTER ================= */
+
+.footer {
+    text-align: center;
+    color: #98a2b3;
+    font-size: 12px;
+    line-height: 1.8;
+    padding: 18px;
+}
+
+</style>
+""")
 
 
 # =========================================================
@@ -68,7 +316,7 @@ def load_model():
 
 
 # =========================================================
-# IMAGE TRANSFORMATION
+# TRANSFORM
 # =========================================================
 
 transform = transforms.Compose([
@@ -164,41 +412,103 @@ def generate_gradcam(
 
 
 # =========================================================
-# HEADER
+# SIDEBAR
 # =========================================================
 
-st.title("🔬 Explainable Medical Imaging")
+with st.sidebar:
 
-st.markdown(
-    """
-    ### AI-Powered Chest X-ray Analysis
+    st.html("""
+    <div class="sidebar-title">
+        🩻 MedExplain AI
+    </div>
 
-    Upload a chest X-ray image to obtain a pneumonia prediction
-    and visualize the regions that influenced the model's decision
-    using **Grad-CAM Explainable AI**.
-    """
-)
+    <div class="sidebar-subtitle">
+        Explainable Medical Imaging
+    </div>
 
-st.caption(
-    "🧠 ResNet-18  •  🔍 Grad-CAM  •  🩻 Chest X-ray Analysis"
-)
+    <div class="sidebar-line"></div>
 
-st.divider()
+    <div class="sidebar-card">
+        <div class="sidebar-card-title">
+            Architecture
+        </div>
+        <div class="sidebar-card-value">
+            ResNet-18
+        </div>
+    </div>
+
+    <div class="sidebar-card">
+        <div class="sidebar-card-title">
+            Task
+        </div>
+        <div class="sidebar-card-value">
+            Pneumonia Classification
+        </div>
+    </div>
+
+    <div class="sidebar-card">
+        <div class="sidebar-card-title">
+            Explainability
+        </div>
+        <div class="sidebar-card-value">
+            Grad-CAM
+        </div>
+    </div>
+
+    <div class="sidebar-line"></div>
+    """)
+
+    st.markdown("### ⚙️ System")
+
+    st.info(
+        f"Device: {str(DEVICE).upper()}"
+    )
+
+    st.caption(
+        "Research & Educational Prototype"
+    )
 
 
 # =========================================================
-# DISCLAIMER
+# HERO
 # =========================================================
 
-st.warning(
-    """
-    ⚠️ **Research & Educational Prototype**
+st.html("""
+<div class="hero">
 
-    This application is intended for research and educational
-    purposes only. It is not a medical device and should not
-    be used for clinical diagnosis or medical decision-making.
-    """
-)
+    <div class="hero-title">
+        🔬 Explainable Medical Imaging
+    </div>
+
+    <div class="hero-text">
+        AI-powered chest X-ray analysis using deep learning
+        with transparent visual explanations through Grad-CAM.
+        Upload an X-ray and explore the model's prediction,
+        confidence and attention regions.
+    </div>
+
+    <div class="badges">
+
+        <span class="badge">
+            🧠 ResNet-18
+        </span>
+
+        <span class="badge">
+            🔍 Grad-CAM
+        </span>
+
+        <span class="badge">
+            🩻 Chest X-ray
+        </span>
+
+        <span class="badge">
+            ⚡ AI Analysis
+        </span>
+
+    </div>
+
+</div>
+""")
 
 
 # =========================================================
@@ -209,9 +519,21 @@ try:
 
     model = load_model()
 
-    st.success(
-        f"✓ ResNet-18 model loaded successfully | Device: {DEVICE}"
-    )
+    st.html(f"""
+    <div class="status">
+
+        <span class="status-online">
+            ● SYSTEM ONLINE
+        </span>
+
+        <span class="status-detail">
+            &nbsp; ResNet-18 loaded successfully
+            &nbsp; • &nbsp;
+            Device: {DEVICE}
+        </span>
+
+    </div>
+    """)
 
 except Exception as e:
 
@@ -223,22 +545,45 @@ except Exception as e:
 
 
 # =========================================================
-# UPLOAD SECTION
+# DISCLAIMER
 # =========================================================
 
-st.header("📤 Upload Chest X-ray")
+st.html("""
+<div class="disclaimer">
 
-st.write(
-    "Upload a chest X-ray image in PNG, JPG, or JPEG format."
-)
+    ⚠️ <b>Research & Educational Prototype</b><br>
+
+    This application is intended for research and educational
+    purposes only. It is not a medical device and should not
+    be used for clinical diagnosis or medical decision-making.
+
+</div>
+""")
+
+
+# =========================================================
+# UPLOAD
+# =========================================================
+
+st.html("""
+<div class="section-title">
+    📤 Upload Chest X-ray
+</div>
+
+<div class="section-text">
+    Upload a chest X-ray image to begin AI-powered analysis.
+    Supported formats: PNG, JPG and JPEG.
+</div>
+""")
 
 uploaded_file = st.file_uploader(
-    "Choose a chest X-ray image",
+    "Drop your chest X-ray here",
     type=[
         "png",
         "jpg",
         "jpeg"
-    ]
+    ],
+    label_visibility="visible"
 )
 
 
@@ -247,10 +592,6 @@ uploaded_file = st.file_uploader(
 # =========================================================
 
 if uploaded_file is not None:
-
-    # -----------------------------------------------------
-    # LOAD IMAGE
-    # -----------------------------------------------------
 
     image = Image.open(
         uploaded_file
@@ -261,33 +602,24 @@ if uploaded_file is not None:
     )
 
 
-    # -----------------------------------------------------
-    # IMAGE + PREDICTION COLUMNS
-    # -----------------------------------------------------
+    # =====================================================
+    # ANALYSIS TITLE
+    # =====================================================
 
-    col1, col2 = st.columns(
-        [1, 1],
-        gap="large"
-    )
+    st.html("""
+    <div class="section-title">
+        📊 Analysis Dashboard
+    </div>
 
-
-    # -----------------------------------------------------
-    # ORIGINAL IMAGE
-    # -----------------------------------------------------
-
-    with col1:
-
-        st.subheader("🩻 Original X-ray")
-
-        st.image(
-            image,
-            use_container_width=True
-        )
+    <div class="section-text">
+        Deep learning prediction and model explainability results.
+    </div>
+    """)
 
 
-    # -----------------------------------------------------
-    # PREPARE TENSOR
-    # -----------------------------------------------------
+    # =====================================================
+    # PREPARE IMAGE
+    # =====================================================
 
     image_tensor = transform(
         image
@@ -296,9 +628,9 @@ if uploaded_file is not None:
     ).to(DEVICE)
 
 
-    # -----------------------------------------------------
-    # MODEL PREDICTION
-    # -----------------------------------------------------
+    # =====================================================
+    # PREDICTION
+    # =====================================================
 
     model.zero_grad()
 
@@ -322,10 +654,6 @@ if uploaded_file is not None:
     ].item()
 
 
-    # -----------------------------------------------------
-    # CLASS NAMES
-    # -----------------------------------------------------
-
     class_names = [
         "Normal",
         "Pneumonia"
@@ -335,10 +663,6 @@ if uploaded_file is not None:
         predicted_class
     ]
 
-
-    # -----------------------------------------------------
-    # PROBABILITIES
-    # -----------------------------------------------------
 
     normal_probability = probabilities[
         0,
@@ -351,45 +675,117 @@ if uploaded_file is not None:
     ].item()
 
 
-    # -----------------------------------------------------
-    # PREDICTION RESULT
-    # -----------------------------------------------------
+    # =====================================================
+    # IMAGE + RESULT
+    # =====================================================
+
+    col1, col2 = st.columns(
+        [1.15, 0.85],
+        gap="large"
+    )
+
+
+    # =====================================================
+    # IMAGE CARD
+    # =====================================================
+
+    with col1:
+
+        st.html("""
+        <div class="card">
+            <div class="card-label">
+                INPUT CHEST X-RAY
+            </div>
+        </div>
+        """)
+
+        st.image(
+            image,
+            use_container_width=True
+        )
+
+        st.caption(
+            f"📁 {uploaded_file.name}"
+        )
+
+
+    # =====================================================
+    # RESULT CARD
+    # =====================================================
 
     with col2:
 
-        st.subheader("🤖 Model Prediction")
+        st.html("""
+        <div class="card">
+            <div class="card-label">
+                MODEL PREDICTION
+            </div>
+        </div>
+        """)
 
         if prediction == "Pneumonia":
 
-            st.error(
-                f"⚠️ Prediction: {prediction}"
-            )
+            st.html("""
+            <div class="prediction-pneumonia">
+                ⚠️ Pneumonia
+            </div>
+            """)
 
         else:
 
-            st.success(
-                f"✓ Prediction: {prediction}"
-            )
+            st.html("""
+            <div class="prediction-normal">
+                ✓ Normal
+            </div>
+            """)
+
+        st.write("")
 
         st.metric(
-            "Confidence",
+            "Prediction Confidence",
             f"{confidence:.2%}"
         )
 
-        st.divider()
+        st.progress(
+            confidence
+        )
 
-        st.write("### Class Probabilities")
 
-        st.write(
-            f"**Normal:** {normal_probability:.2%}"
+    # =====================================================
+    # PROBABILITY SECTION
+    # =====================================================
+
+    st.write("")
+
+    st.html("""
+    <div class="section-title">
+        📈 Class Probabilities
+    </div>
+
+    <div class="section-text">
+        Probability distribution produced by the classification model.
+    </div>
+    """)
+
+    p1, p2 = st.columns(2)
+
+    with p1:
+
+        st.metric(
+            "🟢 Normal",
+            f"{normal_probability:.2%}"
         )
 
         st.progress(
             normal_probability
         )
 
-        st.write(
-            f"**Pneumonia:** {pneumonia_probability:.2%}"
+
+    with p2:
+
+        st.metric(
+            "🔴 Pneumonia",
+            f"{pneumonia_probability:.2%}"
         )
 
         st.progress(
@@ -398,29 +794,44 @@ if uploaded_file is not None:
 
 
     # =====================================================
-    # GRAD-CAM
+    # EXPLAINABILITY
     # =====================================================
 
     st.divider()
 
-    st.header("🔍 Grad-CAM Explainability")
+    st.html("""
+    <div class="section-title">
+        🔍 Explainable AI
+    </div>
 
-    st.write(
-        """
-        Grad-CAM highlights the regions of the chest X-ray
-        that contributed to the model's prediction.
+    <div class="section-text">
+        Visualizing the regions that influenced the neural network.
+    </div>
 
-        Warmer regions indicate areas receiving stronger
-        attention from the neural network.
-        """
-    )
+    <div class="explain">
+
+        <b>How Grad-CAM works</b><br>
+
+        Grad-CAM highlights regions of the X-ray that contributed
+        to the model's prediction. Warmer regions represent stronger
+        model attention.
+
+        <br><br>
+
+        This visualization is intended for model interpretation
+        and is not a clinically validated diagnostic explanation.
+
+    </div>
+    """)
 
 
-    # -----------------------------------------------------
+    # =====================================================
     # GENERATE GRAD-CAM
-    # -----------------------------------------------------
+    # =====================================================
 
-    with st.spinner("Generating Grad-CAM explanation..."):
+    with st.spinner(
+        "Generating Grad-CAM explanation..."
+    ):
 
         cam = generate_gradcam(
             model,
@@ -429,9 +840,9 @@ if uploaded_file is not None:
         )
 
 
-    # -----------------------------------------------------
-    # ORIGINAL IMAGE
-    # -----------------------------------------------------
+    # =====================================================
+    # ORIGINAL
+    # =====================================================
 
     original = np.array(
         image
@@ -448,9 +859,9 @@ if uploaded_file is not None:
     )
 
 
-    # -----------------------------------------------------
+    # =====================================================
     # HEATMAP
-    # -----------------------------------------------------
+    # =====================================================
 
     heatmap = np.uint8(
         255 * cam
@@ -467,9 +878,9 @@ if uploaded_file is not None:
     )
 
 
-    # -----------------------------------------------------
+    # =====================================================
     # OVERLAY
-    # -----------------------------------------------------
+    # =====================================================
 
     overlay = cv2.addWeighted(
         original_rgb,
@@ -480,19 +891,32 @@ if uploaded_file is not None:
     )
 
 
-    # -----------------------------------------------------
-    # DISPLAY GRAD-CAM
-    # -----------------------------------------------------
+    # =====================================================
+    # GRAD-CAM TABS
+    # =====================================================
 
-    gradcam_col1, gradcam_col2 = st.columns(
-        2,
-        gap="large"
+    tab1, tab2, tab3 = st.tabs(
+        [
+            "🩻 Original X-ray",
+            "🌡️ Grad-CAM Heatmap",
+            "🔬 Attention Overlay"
+        ]
     )
 
 
-    with gradcam_col1:
+    with tab1:
 
-        st.subheader("🌡️ Grad-CAM Heatmap")
+        st.image(
+            original,
+            use_container_width=True
+        )
+
+        st.caption(
+            "Original chest X-ray used as model input."
+        )
+
+
+    with tab2:
 
         st.image(
             heatmap,
@@ -500,13 +924,11 @@ if uploaded_file is not None:
         )
 
         st.caption(
-            "Model attention visualization"
+            "Grad-CAM heatmap showing model attention."
         )
 
 
-    with gradcam_col2:
-
-        st.subheader("🩻 Grad-CAM Overlay")
+    with tab3:
 
         st.image(
             overlay,
@@ -514,20 +936,20 @@ if uploaded_file is not None:
         )
 
         st.caption(
-            "Heatmap overlaid on the original X-ray"
+            "Grad-CAM heatmap overlaid on the original X-ray."
         )
 
 
     # =====================================================
-    # INTERPRETATION NOTE
+    # INTERPRETATION
     # =====================================================
 
     st.info(
         """
-        **Interpretation Note:** Grad-CAM is an explainability
-        technique used to visualize model attention. The highlighted
-        regions should not be interpreted as a clinically validated
-        diagnosis or exact disease localization.
+        **Interpretation Note:** Grad-CAM provides an approximate
+        visualization of model attention. Highlighted areas should
+        not be interpreted as exact disease localization or as a
+        clinical diagnosis.
         """
     )
 
@@ -538,8 +960,20 @@ if uploaded_file is not None:
 
 st.divider()
 
-st.caption(
-    "🔬 Explainable Medical Imaging | "
-    "ResNet-18 Transfer Learning + Grad-CAM | "
-    "Research & Educational Project"
-)
+st.html("""
+<div class="footer">
+
+    <b>🔬 Explainable Medical Imaging</b><br>
+
+    ResNet-18 Transfer Learning
+    &nbsp; • &nbsp;
+    Grad-CAM Explainability
+    &nbsp; • &nbsp;
+    Chest X-ray Analysis
+
+    <br>
+
+    Research & Educational Prototype
+
+</div>
+""")
