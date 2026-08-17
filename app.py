@@ -15,210 +15,8 @@ from pathlib import Path
 st.set_page_config(
     page_title="Explainable Medical Imaging",
     page_icon="🔬",
-    layout="wide",
-    initial_sidebar_state="collapsed"
+    layout="wide"
 )
-
-
-# =========================================================
-# CUSTOM CSS — UI POLISH
-# =========================================================
-
-st.markdown("""
-<style>
-
-    /* ---------- Global ---------- */
-
-    .stApp {
-        background: #f7f9fc;
-    }
-
-    .block-container {
-        max-width: 1250px;
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-    }
-
-
-    /* ---------- Header ---------- */
-
-    .hero {
-        background: linear-gradient(
-            135deg,
-            #0f172a 0%,
-            #172554 55%,
-            #0f766e 100%
-        );
-
-        padding: 38px 42px;
-        border-radius: 22px;
-        margin-bottom: 25px;
-        color: white;
-        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
-    }
-
-    .hero-title {
-        font-size: 42px;
-        font-weight: 800;
-        margin-bottom: 8px;
-        letter-spacing: -1px;
-    }
-
-    .hero-subtitle {
-        font-size: 17px;
-        opacity: 0.9;
-        line-height: 1.6;
-        max-width: 850px;
-    }
-
-    .hero-badge {
-        display: inline-block;
-        margin-top: 18px;
-        padding: 7px 14px;
-        border-radius: 999px;
-        background: rgba(255,255,255,0.12);
-        border: 1px solid rgba(255,255,255,0.2);
-        font-size: 13px;
-    }
-
-
-    /* ---------- Section titles ---------- */
-
-    .section-title {
-        font-size: 25px;
-        font-weight: 750;
-        color: #0f172a;
-        margin-top: 25px;
-        margin-bottom: 5px;
-    }
-
-    .section-description {
-        color: #64748b;
-        font-size: 14px;
-        margin-bottom: 18px;
-    }
-
-
-    /* ---------- Upload area ---------- */
-
-    [data-testid="stFileUploader"] {
-        background: white;
-        border: 2px dashed #cbd5e1;
-        border-radius: 18px;
-        padding: 12px;
-        transition: 0.2s ease;
-    }
-
-    [data-testid="stFileUploader"]:hover {
-        border-color: #0f766e;
-        background: #f8fafc;
-    }
-
-
-    /* ---------- Cards ---------- */
-
-    .info-card {
-        background: white;
-        border-radius: 18px;
-        padding: 22px;
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 5px 18px rgba(15, 23, 42, 0.05);
-        margin-bottom: 18px;
-    }
-
-    .card-label {
-        color: #64748b;
-        font-size: 13px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    .card-value {
-        color: #0f172a;
-        font-size: 27px;
-        font-weight: 800;
-        margin-top: 6px;
-    }
-
-
-    /* ---------- Prediction ---------- */
-
-    .prediction-normal {
-        background: #ecfdf5;
-        border: 1px solid #a7f3d0;
-        color: #065f46;
-        border-radius: 16px;
-        padding: 20px;
-        text-align: center;
-        font-size: 26px;
-        font-weight: 800;
-    }
-
-    .prediction-pneumonia {
-        background: #fff1f2;
-        border: 1px solid #fecdd3;
-        color: #9f1239;
-        border-radius: 16px;
-        padding: 20px;
-        text-align: center;
-        font-size: 26px;
-        font-weight: 800;
-    }
-
-
-    /* ---------- Model status ---------- */
-
-    .model-status {
-        background: #ecfdf5;
-        border: 1px solid #bbf7d0;
-        border-radius: 12px;
-        padding: 11px 16px;
-        color: #166534;
-        font-size: 14px;
-        font-weight: 600;
-        margin-bottom: 25px;
-    }
-
-
-    /* ---------- Explanation ---------- */
-
-    .explanation-card {
-        background: #f8fafc;
-        border-left: 4px solid #0f766e;
-        border-radius: 10px;
-        padding: 16px 20px;
-        color: #475569;
-        line-height: 1.6;
-        margin-bottom: 20px;
-    }
-
-
-    /* ---------- Disclaimer ---------- */
-
-    .disclaimer {
-        background: #fff7ed;
-        border: 1px solid #fed7aa;
-        border-radius: 14px;
-        padding: 16px 20px;
-        color: #9a3412;
-        font-size: 13px;
-        line-height: 1.6;
-        margin-top: 30px;
-    }
-
-
-    /* ---------- Footer ---------- */
-
-    .footer {
-        text-align: center;
-        color: #94a3b8;
-        font-size: 13px;
-        padding: 20px 0 5px 0;
-    }
-
-</style>
-""", unsafe_allow_html=True)
 
 
 # =========================================================
@@ -327,7 +125,6 @@ def generate_gradcam(
     score.backward()
 
     activation = activations[0][0]
-
     gradient = gradients[0][0]
 
     weights = gradient.mean(
@@ -367,51 +164,53 @@ def generate_gradcam(
 
 
 # =========================================================
-# HERO HEADER
+# HEADER
 # =========================================================
 
-st.markdown("""
-<div class="hero">
+st.title("🔬 Explainable Medical Imaging")
 
-    <div class="hero-title">
-        🔬 Explainable Medical Imaging
-    </div>
+st.markdown(
+    """
+    ### AI-Powered Chest X-ray Analysis
 
-    <div class="hero-subtitle">
-        AI-powered chest X-ray analysis using deep learning
-        and Grad-CAM explainability to visualize the regions
-        influencing the model's prediction.
-    </div>
+    Upload a chest X-ray image to obtain a pneumonia prediction
+    and visualize the regions that influenced the model's decision
+    using **Grad-CAM Explainable AI**.
+    """
+)
 
-    <div class="hero-badge">
-        🧠 ResNet-18 &nbsp; • &nbsp;
-        🔍 Grad-CAM &nbsp; • &nbsp;
-        🩻 Chest X-ray Analysis
-    </div>
+st.caption(
+    "🧠 ResNet-18  •  🔍 Grad-CAM  •  🩻 Chest X-ray Analysis"
+)
 
-</div>
-""", unsafe_allow_html=True)
+st.divider()
 
 
 # =========================================================
-# MODEL LOAD
+# DISCLAIMER
+# =========================================================
+
+st.warning(
+    """
+    ⚠️ **Research & Educational Prototype**
+
+    This application is intended for research and educational
+    purposes only. It is not a medical device and should not
+    be used for clinical diagnosis or medical decision-making.
+    """
+)
+
+
+# =========================================================
+# LOAD MODEL
 # =========================================================
 
 try:
 
     model = load_model()
 
-    st.markdown(
-        f"""
-        <div class="model-status">
-            ✓ Model loaded successfully
-            &nbsp;&nbsp;|&nbsp;&nbsp;
-            ResNet-18
-            &nbsp;&nbsp;|&nbsp;&nbsp;
-            Device: {DEVICE}
-        </div>
-        """,
-        unsafe_allow_html=True
+    st.success(
+        f"✓ ResNet-18 model loaded successfully | Device: {DEVICE}"
     )
 
 except Exception as e:
@@ -424,39 +223,13 @@ except Exception as e:
 
 
 # =========================================================
-# DISCLAIMER
-# =========================================================
-
-st.markdown("""
-<div class="disclaimer">
-
-    ⚠️ <strong>Research & Educational Prototype</strong><br>
-
-    This application is intended for research and educational
-    purposes only. It is not a medical device and should not
-    be used for clinical diagnosis or medical decision-making.
-
-</div>
-""", unsafe_allow_html=True)
-
-
-# =========================================================
 # UPLOAD SECTION
 # =========================================================
 
-st.markdown(
-    '<div class="section-title">📤 Upload Chest X-ray</div>',
-    unsafe_allow_html=True
-)
+st.header("📤 Upload Chest X-ray")
 
-st.markdown(
-    """
-    <div class="section-description">
-        Upload a chest X-ray image in PNG, JPG, or JPEG format
-        to analyze it using the trained deep learning model.
-    </div>
-    """,
-    unsafe_allow_html=True
+st.write(
+    "Upload a chest X-ray image in PNG, JPG, or JPEG format."
 )
 
 uploaded_file = st.file_uploader(
@@ -465,16 +238,19 @@ uploaded_file = st.file_uploader(
         "png",
         "jpg",
         "jpeg"
-    ],
-    label_visibility="collapsed"
+    ]
 )
 
 
 # =========================================================
-# PREDICTION
+# ANALYSIS
 # =========================================================
 
 if uploaded_file is not None:
+
+    # -----------------------------------------------------
+    # LOAD IMAGE
+    # -----------------------------------------------------
 
     image = Image.open(
         uploaded_file
@@ -484,17 +260,13 @@ if uploaded_file is not None:
         (224, 224)
     )
 
-    st.markdown(
-        '<div class="section-title">🩻 Analysis Results</div>',
-        unsafe_allow_html=True
-    )
 
     # -----------------------------------------------------
-    # IMAGE + PREDICTION
+    # IMAGE + PREDICTION COLUMNS
     # -----------------------------------------------------
 
     col1, col2 = st.columns(
-        [1.1, 0.9],
+        [1, 1],
         gap="large"
     )
 
@@ -505,24 +277,11 @@ if uploaded_file is not None:
 
     with col1:
 
-        st.markdown(
-            '<div class="info-card">',
-            unsafe_allow_html=True
-        )
-
-        st.markdown(
-            '<div class="card-label">Input Image</div>',
-            unsafe_allow_html=True
-        )
+        st.subheader("🩻 Original X-ray")
 
         st.image(
             image,
             use_container_width=True
-        )
-
-        st.markdown(
-            '</div>',
-            unsafe_allow_html=True
         )
 
 
@@ -538,7 +297,7 @@ if uploaded_file is not None:
 
 
     # -----------------------------------------------------
-    # PREDICTION
+    # MODEL PREDICTION
     # -----------------------------------------------------
 
     model.zero_grad()
@@ -563,6 +322,10 @@ if uploaded_file is not None:
     ].item()
 
 
+    # -----------------------------------------------------
+    # CLASS NAMES
+    # -----------------------------------------------------
+
     class_names = [
         "Normal",
         "Pneumonia"
@@ -572,6 +335,10 @@ if uploaded_file is not None:
         predicted_class
     ]
 
+
+    # -----------------------------------------------------
+    # PROBABILITIES
+    # -----------------------------------------------------
 
     normal_probability = probabilities[
         0,
@@ -585,74 +352,36 @@ if uploaded_file is not None:
 
 
     # -----------------------------------------------------
-    # RESULT CARD
+    # PREDICTION RESULT
     # -----------------------------------------------------
 
     with col2:
 
-        st.markdown(
-            '<div class="info-card">',
-            unsafe_allow_html=True
-        )
-
-        st.markdown(
-            '<div class="card-label">Model Prediction</div>',
-            unsafe_allow_html=True
-        )
+        st.subheader("🤖 Model Prediction")
 
         if prediction == "Pneumonia":
 
-            st.markdown(
-                f"""
-                <div class="prediction-pneumonia">
-                    ⚠️ Pneumonia
-                </div>
-                """,
-                unsafe_allow_html=True
+            st.error(
+                f"⚠️ Prediction: {prediction}"
             )
 
         else:
 
-            st.markdown(
-                f"""
-                <div class="prediction-normal">
-                    ✓ Normal
-                </div>
-                """,
-                unsafe_allow_html=True
+            st.success(
+                f"✓ Prediction: {prediction}"
             )
 
-        st.write("")
-
         st.metric(
-            "Prediction Confidence",
+            "Confidence",
             f"{confidence:.2%}"
         )
 
-        st.markdown(
-            '</div>',
-            unsafe_allow_html=True
-        )
+        st.divider()
 
-
-        # -------------------------------------------------
-        # PROBABILITIES
-        # -------------------------------------------------
-
-        st.markdown(
-            '<div class="info-card">',
-            unsafe_allow_html=True
-        )
-
-        st.markdown(
-            '<div class="card-label">Class Probabilities</div>',
-            unsafe_allow_html=True
-        )
-
-        st.write("")
+        st.write("### Class Probabilities")
 
         st.write(
-            f"**Normal** — {normal_probability:.2%}"
+            f"**Normal:** {normal_probability:.2%}"
         )
 
         st.progress(
@@ -660,59 +389,44 @@ if uploaded_file is not None:
         )
 
         st.write(
-            f"**Pneumonia** — {pneumonia_probability:.2%}"
+            f"**Pneumonia:** {pneumonia_probability:.2%}"
         )
 
         st.progress(
             pneumonia_probability
         )
 
-        st.markdown(
-            '</div>',
-            unsafe_allow_html=True
-        )
-
 
     # =====================================================
-    # GRAD-CAM SECTION
+    # GRAD-CAM
     # =====================================================
 
-    st.markdown(
-        '<div class="section-title">🔍 Explainable AI — Grad-CAM</div>',
-        unsafe_allow_html=True
-    )
+    st.divider()
 
-    st.markdown(
+    st.header("🔍 Grad-CAM Explainability")
+
+    st.write(
         """
-        <div class="explanation-card">
+        Grad-CAM highlights the regions of the chest X-ray
+        that contributed to the model's prediction.
 
-        <strong>How to interpret this visualization:</strong><br>
-
-        Grad-CAM highlights image regions that contributed to
-        the model's prediction. Warmer regions indicate areas
-        receiving stronger attention from the neural network.
-
-        <br><br>
-
-        The heatmap is intended for model interpretation and
-        does not represent a clinically validated diagnostic
-        explanation.
-
-        </div>
-        """,
-        unsafe_allow_html=True
+        Warmer regions indicate areas receiving stronger
+        attention from the neural network.
+        """
     )
 
 
     # -----------------------------------------------------
-    # GENERATE CAM
+    # GENERATE GRAD-CAM
     # -----------------------------------------------------
 
-    cam = generate_gradcam(
-        model,
-        image_tensor,
-        predicted_class
-    )
+    with st.spinner("Generating Grad-CAM explanation..."):
+
+        cam = generate_gradcam(
+            model,
+            image_tensor,
+            predicted_class
+        )
 
 
     # -----------------------------------------------------
@@ -767,7 +481,7 @@ if uploaded_file is not None:
 
 
     # -----------------------------------------------------
-    # VISUALIZATIONS
+    # DISPLAY GRAD-CAM
     # -----------------------------------------------------
 
     gradcam_col1, gradcam_col2 = st.columns(
@@ -775,17 +489,10 @@ if uploaded_file is not None:
         gap="large"
     )
 
+
     with gradcam_col1:
 
-        st.markdown(
-            '<div class="info-card">',
-            unsafe_allow_html=True
-        )
-
-        st.markdown(
-            '<div class="card-label">Grad-CAM Heatmap</div>',
-            unsafe_allow_html=True
-        )
+        st.subheader("🌡️ Grad-CAM Heatmap")
 
         st.image(
             heatmap,
@@ -796,23 +503,10 @@ if uploaded_file is not None:
             "Model attention visualization"
         )
 
-        st.markdown(
-            '</div>',
-            unsafe_allow_html=True
-        )
-
 
     with gradcam_col2:
 
-        st.markdown(
-            '<div class="info-card">',
-            unsafe_allow_html=True
-        )
-
-        st.markdown(
-            '<div class="card-label">Grad-CAM Overlay</div>',
-            unsafe_allow_html=True
-        )
+        st.subheader("🩻 Grad-CAM Overlay")
 
         st.image(
             overlay,
@@ -823,10 +517,19 @@ if uploaded_file is not None:
             "Heatmap overlaid on the original X-ray"
         )
 
-        st.markdown(
-            '</div>',
-            unsafe_allow_html=True
-        )
+
+    # =====================================================
+    # INTERPRETATION NOTE
+    # =====================================================
+
+    st.info(
+        """
+        **Interpretation Note:** Grad-CAM is an explainability
+        technique used to visualize model attention. The highlighted
+        regions should not be interpreted as a clinically validated
+        diagnosis or exact disease localization.
+        """
+    )
 
 
 # =========================================================
@@ -835,17 +538,8 @@ if uploaded_file is not None:
 
 st.divider()
 
-st.markdown(
-    """
-    <div class="footer">
-
-        <strong>Explainable Medical Imaging</strong><br>
-
-        ResNet-18 Transfer Learning • Grad-CAM Explainability<br>
-
-        AI Research & Educational Project
-
-    </div>
-    """,
-    unsafe_allow_html=True
+st.caption(
+    "🔬 Explainable Medical Imaging | "
+    "ResNet-18 Transfer Learning + Grad-CAM | "
+    "Research & Educational Project"
 )
