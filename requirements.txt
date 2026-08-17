@@ -1,0 +1,12 @@
+torch==2.13.0
+torchvision
+medmnist
+scikit-learn
+matplotlib
+seaborn
+pandas
+numpy
+Pillow
+opencv-python
+grad-cam
+streamlit
